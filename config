@@ -1,0 +1,5 @@
+IMG_NAME='Streamboks'
+TARGET_HOSTNAME=streamboks
+FIRST_USER_NAME=soundboks
+FIRST_USER_PASS=soundboks
+ENABLE_SSH=1
