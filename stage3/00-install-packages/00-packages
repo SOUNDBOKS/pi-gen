@@ -16,3 +16,4 @@ gcc
 g++
 make
 nodejs
+npm
