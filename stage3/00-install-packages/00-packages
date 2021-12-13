@@ -12,3 +12,7 @@ obconf
 arandr
 libcamera-tools
 libcamera-apps
+gcc
+g++
+make
+nodejs
