@@ -4,21 +4,6 @@ on_chroot << EOF
 	SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_boot_wait 1
 EOF
 
-# Install NVM and NodeJS
-on_chroot << EOF
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-  export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-  nvm install 16
-  nvm alias default 16
-EOF
-
-# Install NodeJS 16 and make it default (via nvm)
-on_chroot << EOF
-
-EOF
-
 #  Install and configure PM2
 on_chroot << EOF
   npm install pm2 -g
