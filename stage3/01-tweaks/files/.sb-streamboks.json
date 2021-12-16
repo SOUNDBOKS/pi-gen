@@ -1,0 +1,6 @@
+{
+  "path": "sb-streamboks",
+  "repo": "streamboks",
+  "file": "dist.zip",
+  "main": "src/index.js"
+}

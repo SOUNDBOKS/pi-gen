@@ -15,5 +15,3 @@ libcamera-apps
 gcc
 g++
 make
-nodejs
-npm
