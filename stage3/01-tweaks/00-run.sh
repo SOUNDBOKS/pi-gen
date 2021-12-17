@@ -5,14 +5,14 @@ on_chroot << EOF
 EOF
 
 # Add the pm2 ecosystem for sb-streamboks
-install -m 644 files/ecosystem.config.json "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/"
+install -m 644 files/ecosystem.config.js "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/"
 
 # Add sb-nodejs-bootloader
 mkdir -p ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/sb-nodejs-bootloader
 unzip -o files/sb-nodejs-bootloader.zip -d ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/sb-nodejs-bootloader
 
 # Add the bootloader app config for sb-streamboks
-install -m 644 files/.sb-streamboks.json "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/sb-nodejs-bootloader/apps/.sb-streamboks.json"
+install -m 644 files/.sb-streamboks.json "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/sb-nodejs-bootloader/apps/"
 
 # Add env variables for the apps (If not already added)
 grep -qxF 'UPDATER_USERNAME' ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.profile || cat << EOT >> ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.profile
