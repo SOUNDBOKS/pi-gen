@@ -25,5 +25,5 @@ EOT
 
 # Add the setup script to user home
 install -m 644 files/setup.sh "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/setup.sh"
-sed -e "s/\${FIRST_USER_NAME}/${FIRST_USER_NAME}/" "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/setup.sh"
-
+sed -i -e "s/\${FIRST_USER_NAME}/${FIRST_USER_NAME}/g" "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/setup.sh"
+chmod u+x "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/setup.sh"

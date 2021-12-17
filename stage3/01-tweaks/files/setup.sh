@@ -7,16 +7,16 @@ echo "Streamboks Setup. Please fill in variables when prompted."
 read -p 'WS_ID: ' WS_ID
 read -p 'WS_URL: ' WS_URL
 
-sed -i '/# WS_ID/d' ~/.profle
-sed -i '/# WS_URL/d' ~/.profle
+sed -i '/# WS_ID/d' /home/${FIRST_USER_NAME}/.profle
+sed -i '/# WS_URL/d' /home/${FIRST_USER_NAME}/.profle
 
-cat << EOT >> ~/.profile
+cat << EOT >> /home/${FIRST_USER_NAME}/.profile
 export WS_ID="$WS_ID"
 export WS_URL="$WS_URL"
 EOT
 
 # Load the updated variables
-source ~/.profile
+source /home/${FIRST_USER_NAME}/.profile
 
 # PM2
 npm install -g pm2
