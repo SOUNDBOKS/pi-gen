@@ -5,8 +5,9 @@ on_chroot << EOF
 EOF
 
 # Install pm2 for the user
+mkdir -p ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/bin
+
 on_chroot << EOF
-  mkdir -p ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/bin
   echo "export PATH=${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/bin/:$PATH" >> ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.bashrc
 
   sudo -H -u ${FIRST_USER_NAME} bash -c "npm config set prefix ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/"
