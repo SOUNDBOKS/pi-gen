@@ -6,9 +6,14 @@ EOF
 
 # Install pm2 for the user
 on_chroot << EOF
-  sudo -H -u ${FIRST_USER_NAME} bash -c 'sudo npm install -g pm2'
-  sudo -H -u ${FIRST_USER_NAME} bash -c 'sudo ${ROOTFS_DIR}/usr/local/lib/node_modules/pm2/bin/pm2 startup'
-  sudo -H -u ${FIRST_USER_NAME} bash -c 'sudo env PATH=$PATH:${ROOTFS_DIR}/usr/bin ${ROOTFS_DIR}/usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u ${FIRST_USER_NAME} --hp ${ROOTFS_DIR}/home/${FIRST_USER_NAME}'
+  mkdir -p ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/bin
+  npm config set prefix "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/"
+  echo "export PATH=${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/bin/:$PATH" >> ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.bashrc
+
+  sudo -H -u ${FIRST_USER_NAME} bash -c 'npm install -g pm2'
+  sudo -H -u ${FIRST_USER_NAME} bash -c "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/lib/node_modules/pm2/bin/pm2 startup"
+  sudo -H -u ${FIRST_USER_NAME} bash -c "env PATH=$PATH:${ROOTFS_DIR}/home/${FIRST_USER_NAME}/usr/bin ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/lib/node_modules/pm2/bin/pm2 startup systemd -u ${FIRST_USER_NAME} --hp ${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
+  sudo -H -u ${FIRST_USER_NAME} bash -c "env PATH=$PATH:${ROOTFS_DIR}/usr/bin pm2 startup systemd -u ${FIRST_USER_NAME} --hp ${ROOTFS_DIR}/home/${FIRST_USER_NAME}"
 EOF
 
 # Add the pm2 ecosystem for sb-streamboks
