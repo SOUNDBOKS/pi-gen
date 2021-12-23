@@ -4,12 +4,18 @@ on_chroot << EOF
 	SUDO_USER="${FIRST_USER_NAME}" raspi-config nonint do_boot_wait 1
 EOF
 
-# Install pm2 for the user
+# Create local npm bin
 mkdir -p ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/bin
 
-on_chroot << EOF
-  echo "export PATH=${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/bin/:$PATH" >> ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.bashrc
+# Add env local npm bin to path
+grep -qxF '/.local/bin/:$PATH' ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.profile || cat << EOT >> ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.profile
 
+# Local npm bin
+export PATH=${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/bin/:$PATH
+EOT
+
+# Install pm2 for the user
+on_chroot << EOF
   sudo -H -u ${FIRST_USER_NAME} bash -c "npm config set prefix ${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/"
   sudo -H -u ${FIRST_USER_NAME} bash -c 'npm install -g pm2'
   sudo -H -u ${FIRST_USER_NAME} bash -c "${ROOTFS_DIR}/home/${FIRST_USER_NAME}/.local/lib/node_modules/pm2/bin/pm2 startup"
