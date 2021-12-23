@@ -7,8 +7,8 @@ echo "Streamboks Setup. Please fill in variables when prompted."
 read -p 'WS_ID: ' WS_ID
 read -p 'WS_URL: ' WS_URL
 
-sed -i '/# WS_ID/d' /home/${FIRST_USER_NAME}/.profle
-sed -i '/# WS_URL/d' /home/${FIRST_USER_NAME}/.profle
+sed -i '/WS_ID/d' /home/${FIRST_USER_NAME}/.profile
+sed -i '/WS_URL/d' /home/${FIRST_USER_NAME}/.profile
 
 cat << EOT >> /home/${FIRST_USER_NAME}/.profile
 export WS_ID="$WS_ID"
@@ -17,11 +17,6 @@ EOT
 
 # Load the updated variables
 source /home/${FIRST_USER_NAME}/.profile
-
-# PM2
-npm install -g pm2
-pm2 startup
-sudo env PATH=$PATH:/usr/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u ${FIRST_USER_NAME} --hp /home/${FIRST_USER_NAME}
 
 # Start
 pm2 start
